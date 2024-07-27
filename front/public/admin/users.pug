@@ -1,0 +1,87 @@
+include layouts/head
+
+
+<table id="example" class="display" style="width:100%">
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>amount</th>
+<th>invites</th>
+<th>status</th>
+<th>create_at</th>
+<th>block</th>
+<th>delete</th>
+</tr>
+</thead>
+<tbody>
+    each val in users
+        <tr>
+        td= val.id
+        td= val.name
+        td= val.amount
+        td= val.invite_ids
+        td= val.status
+        td= val.create_at
+        if val.status==1
+          <td>
+          <form action="/admin/user_block" method="post">
+          input(
+            type='hidden'
+            name='id'
+            value=val.id
+          )
+          input(
+            type='hidden'
+            name='status'
+            value=0
+          )
+          input(
+              type='hidden'
+              name='_method'
+              value='put'
+          )
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+          <input class="btn btn-primary" type="submit" name="submit" value="Block"/>
+          </form>
+          </td>
+        else
+          <td>
+          <form action="/admin/user_block" method="post">
+          input(
+            type='hidden'
+            name='id'
+            value=val.id
+          )
+          input(
+            type='hidden'
+            name='status'
+            value=1
+          )
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+          <input class="btn btn-primary" type="submit" name="delete_user" value="Unblock"/>
+          </form>
+          </td>
+        <td>
+        <form action="/admin/user_del" method="post">
+        input(
+            type='hidden'
+            name='id'
+            value=val.id
+        )
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        <input type="submit" class="btn btn-danger" name="delete_user" value="Delete">
+        </form>
+        </td>
+        </tr>
+    </tbody>
+</table>
+
+
+include layouts/footer
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+script.
+    new DataTable('#example');
+

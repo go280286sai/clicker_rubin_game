@@ -1,0 +1,45 @@
+.form_auth_container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form_auth {
+  max-width: 500px;
+  width: 100%;
+  padding: 30px;
+  background-color: #bac5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+body {
+  background-color: #FFFFFF;
+}
+.err_message {
+  color: red;
+  font-size: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.task_add {
+  color: #FFFFFF;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.form_task {
+  max-width: 500px;
+  width: 100%;
+  padding: 30px;
+  background-color: #bac5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.btn_back {
+  margin-left: 5px;
+}
+/*# sourceMappingURL=admin.css.map */

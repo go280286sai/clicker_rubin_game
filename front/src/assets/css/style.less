@@ -1,0 +1,308 @@
+@body-background-color: #bac5f5;
+@container-background-color: rgba(255, 255, 255, 0.7);
+@header-background-color: #921111;
+@score-block-background-color: rgba(253, 253, 253, 0.5);
+@header-text-color: #FFFFFF;
+@score-text-color: #a00;
+@footer-background-color: #921111;
+@icon-shadow: 9px 7px 4px rgba(0, 0, 0, 0.75);
+@number-text-shadow: 7px -7px 4px rgba(0, 0, 0, 0.75);
+@airdrop-shadow-color: #fff3cd;
+@airdrop-text-color: #aa0000;
+@airdrop-text-shadow: 3px -3px 1px rgb(255, 255, 255);
+@referral-text-color: #aa0000;
+@referral-text-shadow: 3px -3px 1px rgb(255, 255, 255);
+@referral-status-color: #f60000;
+@scrollable-background-odd: #1a1d20;
+@scrollable-background-even: #921111;
+@scrollable-text-color: #fff3cd;
+@scrollable-header-color: #921111;
+@with_app: 384px;
+@height_app: 590px;
+@margin_left_block: -@with_app*0.032;
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: @body-background-color;
+  justify-content: center;
+  align-items: center;
+  width: @with_app;
+
+  background-repeat: repeat;
+}
+
+.container {
+  width: 100%;
+  overflow: hidden;
+  background-color: @container-background-color;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.header_tap {
+  position: absolute;
+  width: @with_app;
+  height: @with_app*0.2;
+  display: flex;
+  margin-left: @margin_left_block;
+  align-items: center;
+  background: @header-background-color;
+  justify-content: center;
+}
+
+.header_txt {
+  position: relative;
+  width: @with_app*0.8;
+  height: 15px;
+  font-family: 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 22px;
+  color: @header-text-color;
+  text-shadow: 3px -3px 1px rgba(0, 0, 0, 1);
+  align-self: center;
+}
+
+.score_block {
+  position: relative;
+  top: 100px;
+  margin-left: @margin_left_block;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: @score-block-background-color;
+  width: @with_app;
+}
+
+.score {
+  font-size: 34px;
+  padding-top: 10px;
+  color: @score-text-color;
+  margin-left: -@with_app*0.032;
+  text-shadow: 5px -7px 7px rgba(0, 0, 0, 0.5);
+  font-style: normal;
+  font-weight: 750;
+  text-align: center;
+  width: @with_app;
+}
+
+.ruby-image>img {
+  position: relative;
+  width: @with_app*0.6;
+  height: @with_app*0.6;
+  margin-top: 160px;
+  filter: drop-shadow(24px 5px 10px rgba(1, 1, 1, 0.75));
+  cursor: pointer;
+  margin-left: 15px;
+
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: @with_app;
+  height: @with_app*0.2;
+  margin-top: 75px;
+  background: @footer-background-color;
+  margin-left: @margin_left_block;
+}
+
+.nav-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+}
+
+.icon img {
+  width: @with_app*0.15;
+  height: @with_app*0.15;
+  filter: drop-shadow(@icon-shadow);
+  border-radius: 50px;
+}
+
+.fon {
+  position: absolute;
+  width: @with_app;
+  height: @height_app;
+  background: url(../img/fon.png);
+}
+
+.fon-2 {
+  position: absolute;
+  width: @with_app;
+  height: @height_app;
+  background-color: #1a1d20;
+}
+
+.number {
+  position: absolute;
+  padding-top: 150px;
+  padding-left: 30px;
+  font-family: 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 22px;
+  color: @header-text-color;
+  text-shadow: @number-text-shadow;
+  animation: riseAndFade 1s forwards;
+  pointer-events: none;
+}
+
+@keyframes riseAndFade {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+.body_text {
+  height: @height_app*0.525;
+  font-family: 'Arial', sans-serif;
+  font-style: normal;
+  font-size: 5px;
+  background: #1a1d20;
+  text-align: center;
+  margin-top: 130px;
+}
+
+.airdrop {
+  margin-top: @with_app*0.05;
+  margin-left: 20px;
+  width: @with_app*0.3;
+  height: @with_app*0.3;
+  box-shadow: @airdrop-shadow-color 0 0 0 1px, @airdrop-shadow-color 0 0 0 5px, @airdrop-shadow-color 0 0 0 7px;
+}
+
+.airdrop_text {
+  font-family: 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 200;
+  font-size: 35px;
+  line-height: 22px;
+  color: @airdrop-text-color;
+  text-shadow: @airdrop-text-shadow;
+  text-align: center;
+  margin-top: 80px;
+}
+
+.referral_block_txt {
+  font-family: 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 22px;
+  color: @referral-text-color;
+  text-shadow: @referral-text-shadow;
+  text-align: center;
+  cursor: pointer;
+}
+
+.referral_block_status {
+  font-size: 15px;
+  color: @referral-status-color;
+  text-align: right;
+}
+
+.scrollable {
+  margin-top: 20px;
+  width: @with_app;
+  height: @height_app*0.6;
+  overflow: auto;
+  color: @scrollable-text-color;
+  font-size: 15px;
+  padding-top: 5px;
+}
+
+table {
+  width: @with_app*0.9;
+  align-items: center;
+}
+
+.tasks {
+  height: @with_app;
+  overflow: auto;
+}
+
+.scrollable tr:nth-child(odd) {
+  background-color: @scrollable-background-odd;
+}
+
+.scrollable tr:nth-child(even) {
+  background-color: @scrollable-background-even;
+}
+
+.scrollable th {
+  font-size: 50px;
+  color: @scrollable-header-color;
+  text-align: center;
+}
+
+.ol_style {
+  width: @with_app*0.8;
+  font-size: 15px;
+  color: @scrollable-text-color;
+  text-align: center;
+  margin-left: 25px;
+
+  p {
+    font-size: 25px;
+    color: @referral-status-color;
+    text-align: center;
+    margin-top: 5px;
+    text-decoration: underline;
+  }
+}
+
+.btn_start {
+  border-radius: 70px;
+  width: 40px;
+  height: 25px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.rubin_tab_name {
+  color: #bac5f5;
+  text-decoration: underline;
+}
+
+/* Debugging Outline */
+/*
+* {
+    outline: @referral-text-color solid 1px;
+}
+*/
+.wallet > img {
+  width: 40px;
+  height: 40px;
+  margin-top: 25px;
+  margin-left: 30px;
+  box-shadow: 3px 3px 5px rgb(186, 197, 245);
+  align-content: end;
+  cursor: pointer;
+  border-radius: 15px;
+
+}
+.text_wallet {
+  padding-top: 25px;
+  font-size: 30px;
+  color: #ffffff;
+  text-shadow: 3px 3px 4px rgb(255, 255, 255);
+  text-align: left;
+}
+

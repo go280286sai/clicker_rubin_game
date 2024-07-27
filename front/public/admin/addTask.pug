@@ -1,0 +1,27 @@
+include layouts/head
+<form class="form_task" action="/admin/task_added" method="post">
+<div class="mb-3">
+<label for="title" class="form-label">Title</label>
+<input type="text" class="form-control" id="title" aria-describedby="emailHelp" name='title'>
+</div>
+<div class="mb-3">
+<label for="amount" class="form-label">Amount</label>
+<input type="number" class="form-control" id="amount" name="amount" aria-describedby="emailHelp">
+</div>
+<div class="mb-3">
+<label for="url" class="form-label">Url</label>
+<input type="text" class="form-control" id="url" name="url">
+</div>
+<input type="hidden" name="_csrf" value="{{ csrfToken }}">
+<button type="submit" class="btn btn-primary" name="submit">Submit</button>
+<div class="btn btn-success btn_back" onclick="window.open('/admin/tasks', '_parent')">Back</div>
+
+
+</form>
+
+
+
+
+
+
+include layouts/footer
