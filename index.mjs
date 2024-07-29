@@ -17,7 +17,7 @@ const server = http.createServer(app);
 
 // Белый список разрешенных сайтов
 const allowedOrigins = [
-    'http://192.168.50.70:5000',
+    'http://localhost:5000',
     process.env.URL_START,
 ];
 
@@ -56,13 +56,7 @@ app.use(routeAdmin);
 app.use(routeUser);
 app.set('views', path.resolve() + '/front/build/admin');
 app.set('view engine', 'pug');
-// Обработка ошибок CSRF
-app.use((err, req, res, next) => {
-    if (err.code !== 'EBADCSRFTOKEN') return next(err);
-    res.status(403).send('Invalid CSRF token');
-});
 
-// Запуск сервера
-server.listen(5000, '192.168.50.70', () => {
-    console.log('Listening on 192.168.50.70:5000');
+server.listen(5000, '127.0.0.1', () => {
+    console.log('Listening on http://localhost:5000');
 });

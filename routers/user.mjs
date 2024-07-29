@@ -12,11 +12,10 @@ import {getTasks} from "../db/getTasks.mjs";
 const routeUser = express.Router();
 
 routeUser.get('/:ids/:names/:referral?', async (req, res) => {
-    const id = req.params['ids'].toString();
-    const names = req.params['names'].toString();
-    const referral = req.params['referral'].toString();
-    console.log(id, names, referral);
     try {
+        const id = req.params['ids'].toString();
+        const names = req.params['names'].toString();
+        const referral = req.params['referral'].toString();
         req.session.ids = id;
         req.session.names = names;
         req.session.referral = referral;
@@ -37,10 +36,16 @@ routeUser.get('/:ids/:names/:referral?', async (req, res) => {
 });
 
 routeUser.get('/main', async (req, res) => {
-    if (!req.session.ids) {
-        res.json({'status': 'error'});
+    try {
+        if (!req.session.ids) {
+            res.json({'status': 'error'});
+        }
+        res.sendFile(path.resolve() + '/front/build/index.html');
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
     }
-    res.sendFile(path.resolve() + '/front/build/index.html');
+
 })
 
 routeUser.get('/user', async (req, res) => {
@@ -55,17 +60,23 @@ routeUser.get('/user', async (req, res) => {
 
 // Маршрут для получения задач с проверкой белого списка и CSRF защиты
 routeUser.get('/tasks', async (req, res) => {
-    if (!req.session.ids) {
-        res.json({'status': 'error'});
+    try {
+        if (!req.session.ids) {
+            res.json({'status': 'error'});
+        }
+        const tasks = await getTasks();
+        res.json(tasks);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
     }
-    const tasks = await getTasks();
-    res.json(tasks);
+
 });
 routeUser.post('/api/mint', async (req, res) => {
-    if (!req.session.ids) {
-        res.json({'status': 'error'});
-    }
     try {
+        if (!req.session.ids) {
+            res.json({'status': 'error'});
+        }
         const id = req.session.ids;
         // const id = 5;
         const amount = req.body.amount;
@@ -78,14 +89,19 @@ routeUser.post('/api/mint', async (req, res) => {
 
 })
 routeUser.post('/api/add_wallet', async (req, res) => {
-    if (!req.session.ids) {
-        res.json({'status': 'error'});
+    try {
+        if (!req.session.ids) {
+            res.json({'status': 'error'});
+        }
+        const wallet = req.body.wallet;
+        const id = req.session.ids;
+        // const id = 5;
+        await addWallet(id, wallet);
+        res.send({'status': 'ok'});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
     }
-    const wallet = req.body.wallet;
-    const id = req.session.ids;
-    // const id = 5;
-    await addWallet(id, wallet);
-    res.send({'status': 'ok'});
 });
 routeUser.post('/api/insert_invite', async (req, res) => {
     try {
