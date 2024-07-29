@@ -42,8 +42,8 @@ export function MainComponent(props) {
         fetchData();
     }, [main_url]);
 
-    async function mint(main_url = props.main_url) {
-        await fetch('/api/mint', {
+    async function mint() {
+        await fetch(main_url + '/api/mint', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

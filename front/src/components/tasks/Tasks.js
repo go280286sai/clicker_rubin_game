@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 export function Tasks(props) {
+    const [main_url] = useState(props.main_url);
+    const [data, setData] = useState(null);
+    const [count, setCount] = useState(0);
+    const [tasks_ids, setTasks_ids] = useState([]);
+    const [user_id, setUser_id] = useState(null);
     async function mint(count, n) {
-        await fetch(props.main_url+'/api/mint', {
+        await fetch(main_url+'/api/mint', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -10,9 +15,8 @@ export function Tasks(props) {
             body: JSON.stringify({ 'amount': count + n }),
         });
     }
-
     async function insertUsersTasks(user_id, task_id) {
-        await fetch(props.main_url+'/api/insert_users_tasks', {
+        await fetch(main_url+'/api/insert_users_tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,30 +25,23 @@ export function Tasks(props) {
         });
     }
 
-    function DataFetchingComponent() {
-        const [data, setData] = useState(null);
-        const [count, setCount] = useState(0);
-        const [tasks_ids, setTasks_ids] = useState([]);
-        const [user_id, setUser_id] = useState(null);
-
+    const fetchData = async () => {
+        try {
+            let response = await fetch(main_url+'/tasks');
+            let result = await response.json();
+            setData(result);
+            response = await fetch(main_url+'/user');
+            result = await response.json();
+            setCount(parseInt(result['amount']));
+            setTasks_ids(result['tasks_ids'] || []); // Ensure tasks_ids is an array
+            setUser_id(result['user_id']);
+        } catch (error) {
+            console.error(error);
+        }
+    };
         useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    let response = await fetch(props.main_url+'/tasks');
-                    let result = await response.json();
-                    setData(result);
-
-                    response = await fetch(props.main_url+'/user');
-                    result = await response.json();
-                    setCount(parseInt(result['amount']));
-                    setTasks_ids(result['tasks_ids'] || []); // Ensure tasks_ids is an array
-                    setUser_id(result['user_id']);
-                } catch (error) {
-                    console.error(error);
-                }
-            };
             fetchData();
-        }, []);
+        }, [main_url]);
 
         return (
             <div className={"ol_style"}>
@@ -66,7 +63,7 @@ export function Tasks(props) {
                                             setTimeout(async () => {
                                                 await mint(count, task.amount);
                                                 await insertUsersTasks(user_id, task.id);
-                                                window.location.reload();
+                                                await fetchData();
                                             }, 1000);
                                         }}
                                     >
@@ -80,11 +77,4 @@ export function Tasks(props) {
                 </table>
             </div>
         );
-    }
-
-    return (
-        <div>
-            <DataFetchingComponent />
-        </div>
-    );
 }

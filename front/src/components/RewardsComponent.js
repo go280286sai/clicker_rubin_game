@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Footer} from "./parts/Footer";
 import airdrop from '../assets/img/airdrop.png';
-import wallet_open from '../assets/img/wallet_open.png';
-import wallet_close from '../assets/img/wallet_close.png';
+import wallet_open from '../assets/img/wallet_open.jpg';
+import wallet_close from '../assets/img/wallet_close.jpg';
 
 export function RewardsComponent(props) {
     const [names] = useState(props.name);

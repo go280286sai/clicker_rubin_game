@@ -8,7 +8,7 @@ import {RewardsComponent} from "./components/RewardsComponent";
 import {Routes, Route} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import {config} from "./config.mjs";
-
+const main_url = config.PATH_URL.toString();
 const app_url = config.APP_URL.toString();
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         // Функция для выполнения GET-запроса
         const fetchData = async () => {
             try {
-                const response = await fetch('/user');
+                const response = await fetch(main_url + '/user');
                 const result = await response.json();
                 setNames(result['name']);
                 setId(result['id']);
@@ -39,11 +39,11 @@ function App() {
     return (
         <div>
             <Routes>
-                <Route path="/main" element={<MainComponent/>}/>
-                <Route path="/tasks" element={<TasksComponent name={names}/>}/>
+                <Route path="/main" element={<MainComponent main_url={main_url}/>}/>
+                <Route path="/tasks" element={<TasksComponent name={names} main_url={main_url}/>}/>
                 <Route path="/friends"
-                       element={<FriendsComponent name={names} friends={friends} app_url={app_url} id={id}/>}/>
-                <Route path="/rewards" element={<RewardsComponent name={names} wallet={wallet}/>}/>
+                       element={<FriendsComponent name={names} friends={friends} app_url={app_url} id={id} main_url={main_url}/>}/>
+                <Route path="/rewards" element={<RewardsComponent name={names} wallet={wallet} main_url={main_url}/>}/>
             </Routes>
         </div>
     );

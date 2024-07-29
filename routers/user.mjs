@@ -7,12 +7,15 @@ import {settInvite} from "../db/settInvite.mjs";
 import {isUser} from "../db/isUser.mjs";
 import {getInvite} from "../db/getInvite.mjs";
 import {addWallet} from "../db/addWallet.mjs";
+import {getTasks} from "../db/getTasks.mjs";
+
 const routeUser = express.Router();
 
 routeUser.get('/:ids/:names/:referral?', async (req, res) => {
     const id = req.params['ids'].toString();
     const names = req.params['names'].toString();
     const referral = req.params['referral'].toString();
+    console.log(id, names, referral);
     try {
         req.session.ids = id;
         req.session.names = names;
@@ -23,7 +26,7 @@ routeUser.get('/:ids/:names/:referral?', async (req, res) => {
             const bonus = 200;
             await settInvite(referral, id)
             const user = await getInvite(referral);
-            await mintUser(referral, user['amount']+bonus);
+            await mintUser(referral, user['amount'] + bonus);
             await mintUser(id, bonus);
         }
         res.redirect('/main');
@@ -34,23 +37,34 @@ routeUser.get('/:ids/:names/:referral?', async (req, res) => {
 });
 
 routeUser.get('/main', async (req, res) => {
+    if (!req.session.ids) {
+        res.json({'status': 'error'});
+    }
     res.sendFile(path.resolve() + '/front/build/index.html');
 })
 
 routeUser.get('/user', async (req, res) => {
+    if (!req.session.ids) {
+        res.json({'status': 'error'});
+    }
     const id = req.session.ids;
-    const names= req.session.names;
+    const names = req.session.names;
     const user = await getUser(id, names);
-    // const user = await getUser("5", "alex");
     res.json(user);
 });
 
 // Маршрут для получения задач с проверкой белого списка и CSRF защиты
 routeUser.get('/tasks', async (req, res) => {
+    if (!req.session.ids) {
+        res.json({'status': 'error'});
+    }
     const tasks = await getTasks();
     res.json(tasks);
 });
 routeUser.post('/api/mint', async (req, res) => {
+    if (!req.session.ids) {
+        res.json({'status': 'error'});
+    }
     try {
         const id = req.session.ids;
         // const id = 5;
@@ -64,6 +78,9 @@ routeUser.post('/api/mint', async (req, res) => {
 
 })
 routeUser.post('/api/add_wallet', async (req, res) => {
+    if (!req.session.ids) {
+        res.json({'status': 'error'});
+    }
     const wallet = req.body.wallet;
     const id = req.session.ids;
     // const id = 5;
@@ -72,6 +89,9 @@ routeUser.post('/api/add_wallet', async (req, res) => {
 });
 routeUser.post('/api/insert_invite', async (req, res) => {
     try {
+        if (!req.session.ids) {
+            res.json({'status': 'error'});
+        }
         let invite_ids = req.body.invite_ids;
         invite_ids = invite_ids.toString().trim().split(',');
         let users = [];
@@ -87,8 +107,11 @@ routeUser.post('/api/insert_invite', async (req, res) => {
 })
 routeUser.post('/api/insert_users_tasks', async (req, res) => {
     try {
-        // const user_id = req.session.ids;
-        const user_id = 5;
+        if (!req.session.ids) {
+            res.json({'status': 'error'});
+        }
+        const user_id = req.session.ids;
+        // const user_id = 5;
         const task_id = req.body.task_id;
         await insertUsersTasks(user_id, task_id);
         res.send({'status': 'ok'});

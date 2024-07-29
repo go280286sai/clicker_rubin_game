@@ -147,13 +147,9 @@ footer {
   box-shadow: #fff3cd 0 0 0 1px, #fff3cd 0 0 0 5px, #fff3cd 0 0 0 7px;
 }
 .airdrop_text {
-  font-family: 'Arial', sans-serif;
-  font-style: normal;
-  font-weight: 200;
   font-size: 35px;
-  line-height: 22px;
   color: #aa0000;
-  text-shadow: 3px -3px 1px #ffffff;
+  text-shadow: 3px 3px 4px #ffffff;
   text-align: center;
   margin-top: 80px;
 }
@@ -237,10 +233,9 @@ table {
   height: 40px;
   margin-top: 25px;
   margin-left: 30px;
-  box-shadow: 3px 3px 5px #bac5f5;
   align-content: end;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 7px;
 }
 .text_wallet {
   padding-top: 25px;
